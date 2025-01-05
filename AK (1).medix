@@ -1,0 +1,124 @@
+import pyttsx3
+import pyaudio
+import datetime
+import speech_recognition  as sr
+import wikipedia
+import webbrowser
+import os
+import smtplib
+from googletrans import Translator
+
+
+
+
+
+engine = pyttsx3.init()
+# voices = engine.getProperty('voices')
+# # print(voices[1].id)
+# engine.setProperty('voice', voices[0].id)
+
+
+
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+def wishMe():
+    hour = int(datetime.datetime.now().hour)
+    if hour >=0 and hour <12:
+        speak("Good Morning")
+    elif hour >=12 and hour <18:
+        speak("Good Afternoon")
+    else:
+        speak("Good Evening")
+    speak(" I am Anbhav , your personal medical bot ")
+
+def takeCommand():
+
+    r = sr.Recognizer()
+    with sr.Microphone(device_index=0) as source:
+        print("Listening....")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+    try:
+        print("Recognising ..")
+        query = r.recognize_google(audio, language='en-in')
+        print(f"User said : {query}\n")
+
+    except Exception as e:
+        # print(e)
+
+        print("Say that again please")
+        return "None"
+
+    return query
+
+if __name__== "__main__":
+    
+    wishMe()
+
+    if 1:
+        
+            speak("please enter your id and password:-")
+            # id =int(input("Enter your ID :-"))
+            print("Enter your ID :-")
+            id=takeCommand().lower()
+            if '123456' in id:
+                password=int(input("Enter your password :-"))
+                if password == 123456:
+                    speak("You are logged in sir")
+                    print("You are logged in sir.")
+                    print("PLease answer the questions below:-\n")
+                    speak("PLease answer the questions below:-")
+                    blood=input("What is your blood group:-\na)A+ve\nb)A-ve\nc)B+ve\nd)B-ve\ne)AB+ve \nf)AB-ve\ng))O+ve\nh)O-ve\n")
+                    age=input("What is your age:-")
+                    heig=input("Do you know your height:-(YES/NO)\n").lower()
+                    if heig =='yes':
+                        height=int(input("What is your height:-\n"))
+                    weig=input("Do you know your weight:-(YES/NO)\n").lower()
+                    if weig=='yes':
+                        weight=int(input("What is your weight:-"))
+                    print("Personal Medical History:-\n")
+                    disease =input("Do you have any chronic illnesses (e.g., diabetes, hypertension)?('yes'/'no')").lower()
+                    if disease=='yes':
+                        sur=input("Have you had any surgeries or hospitalizations in the past? - (YES/NO)").lower()
+                        if sur=='yes':
+                            med=input("Are you currently taking any medications, including over-the-counter drugs and supplements?- (YES/NO)").lower()
+                            if med=='yes':
+                                print("Please enter the names of the medicines")
+                    print("\nFamily Medical History:-\n")
+                    rel=input("Do any of your close relatives have chronic diseases (e.g., heart disease, cancer, diabetes)?")
+                    gen=input("Is there a history of genetic conditions in your family?")
+                    alergies=input("Are you allergic to any medications, foods, or other substances?(YES/NO)")
+                    if alergies=='yes':
+                        ans=input("What reactions do you have to these allergens?-")
+                    diet=input("Do you have any dietary restrictions or follow any specific diet plans?\n If yes ,what?")
+                    exercise=input("Do you exercise ? (YES/NO)").lower()
+                    if exercise=='yes':
+                        type=input("How often do you exercise, and what type of exercise do you do?")
+                    sleep=input("How many hours of sleep do you get on average per night?\n a)8-10 \n b)5-8 \n c)2-4:-\n")
+                    if sleep=='c':
+                        diff=input("What are the difficulties you are facing during sleep hour:- ")
+                    else:
+                        print("Thank You For your Time ,\n Your responses has been recorded>>>")
+                        speak("Thank You For your Time ,\n Your responses has been recorded>>>")
+                        feedback=input("If you got any feedback please provide it:-\n")
+                        print("THANKYOU")
+                        speak("THANKYOU")
+                else:
+                    speak("Wrong password sir ..")
+                    print("Wrong password sir ..")
+            else:
+                speak("Wrong ID Sir ..")
+                print("Wrong ID Sir ..")
+            
+
+
+
+
+
+
+
+
